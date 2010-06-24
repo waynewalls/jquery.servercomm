@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+        <title>serverComm Development</title>
+
+        <style type="text/css">
+
+            input, label, button { vertical-align:middle; }
+            button { margin-left:1em; }
+
+            .container { margin-left:1em; }
+
+            #sc_contactServerPrompt { font-size:100%; font-family:"Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Lucida, Verdana, Helvetica, Arial, sans-serif }
+            .sc_red { background-color:#FD2F00; color:white; }
+
+        </style>
+
+    </head>
+
+
+    <body>
+
+        <h3>jquery.servercomm Demonstration Page</h3>
+
+        <div class="container">
+
+            <label><input type="checkbox" name="test_value " value="test"/> test</label>
+
+            <button>Submit</button>
+
+        </div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+            // load jQuery from Google's CDN
+        </script>
+
+        <script type="text/javascript" src="jquery.servercomm.js">
+            // load the jquery.servercomm plugin
+        </script>
+
+
+        <script type="text/javascript">
+
+
+            // preload the images we'll need for this page
+            // [ http://engineeredweb.com/blog/09/12/preloading-images-jquery-and-javascript ]
+            ( function() {
+                
+                var toLoad = [
+                    // see [ http://www.ajaxload.info/ ] for public domain animated gifs
+                    "close.gif",
+                    "busy666.gif",
+                    "busy999.gif"],
+                    cache = [],
+                    cacheImage,
+                    len,
+                    i;
+
+                len = toLoad.length;
+                for (i = len; i--;) {
+                    cacheImage = document.createElement('img');
+                    cacheImage.src = toLoad[i];
+                    cache.push(cacheImage);
+                }
+
+            }() );
+
+
+            ( function() {
+
+                $(window).bind("load", function() {
+
+                    $("button:contains(Submit)").bind("click", function() {
+
+                        if ($.serverComm.activeConnection()) {
+
+                            $.serverComm.inprocessWarning();
+                            return false;
+                        }
+
+                        else {
+
+                            $.serverComm.contactServer({
+                                url        : "test_submit.php",
+                                dataObject : { test_id:0, test_value:"test" },
+
+                                giveupCallback : function() {
+                                    console.log("giveup")
+                                },
+
+                                successCallback : function() {
+                                    console.log("success");
+                                }
+                            });
+
+                            return true;
+                        }
+
+                    });
+
+                });
+
+            }() );
+
+        </script>
+
+    </body>
+
+</html>
