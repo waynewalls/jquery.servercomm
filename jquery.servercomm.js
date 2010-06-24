@@ -129,11 +129,23 @@
             // an active XHR connection (activeRequest && inprocess) and the "please try
             // again later" state (!activeRequest && inprocess)
 
+            var options = $.serverComm.options;
+
             errorMessage = errorMessage || "";
 
             console.log(errorMessage);
 
             activeRequest = null;
+
+
+            // invoke the errorCallback function
+            if (options.errorCallback) {
+
+                if ($.isFunction(options.errorCallback)) {
+                    options.errorCallback.call(null, errorMessage, requestAttempts);
+                }
+            }
+
 
             // increment the request attempts counter
             requestAttempts += 1;
@@ -216,6 +228,9 @@
 
             // callback for page specific processing in giveup()
             giveupCallback  : null,
+
+            // callback for page specific processing in ajaxProblem()
+            errorCallback   : null,
 
             // callback for page specific processing in success()
             successCallback : null
@@ -370,8 +385,9 @@
 
                                     // invoke the successCallback function
                                     if ($.serverComm.options.successCallback) {
+
                                         if ($.isFunction($.serverComm.options.successCallback)) {
-                                            $.serverComm.options.successCallback.call();
+                                            $.serverComm.options.successCallback.call(null, response, requestAttempts);
                                         }
                                     }
 
