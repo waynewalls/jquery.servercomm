@@ -94,18 +94,18 @@
                         var returnDisplay = $("#return span"),
                             dataDisplay   = $("#data span");
 
-                        returnDisplay.empty();
-                        returnDisplay.css( { padding:"0" } );
-                        dataDisplay.empty();
-                        dataDisplay.css( { padding:"0" } );
-
                         if ($.serverComm.activeConnection()) {
-
                             $.serverComm.inprocessWarning();
+
                             return false;
                         }
 
                         else {
+
+                            returnDisplay.empty();
+                            returnDisplay.css( { padding:"0" } );
+                            dataDisplay.empty();
+                            dataDisplay.css( { padding:"0" } );
 
                             $.serverComm.contactServer({
                                 url        : "test_submit.php",
@@ -153,18 +153,18 @@
                         var returnDisplay = $("#return span"),
                             dataDisplay   = $("#data span");
 
-                        returnDisplay.empty();
-                        returnDisplay.css( { padding:"0" } );
-                        dataDisplay.empty();
-                        dataDisplay.css( { padding:"0" } );
-
                         if ($.serverComm.activeConnection()) {
-
                             $.serverComm.inprocessWarning();
+
                             return false;
                         }
 
                         else {
+
+                            returnDisplay.empty();
+                            returnDisplay.css( { padding:"0" } );
+                            dataDisplay.empty();
+                            dataDisplay.css( { padding:"0" } );
 
                             $.serverComm.contactServer({
                                 url        : "test_submit.php",
