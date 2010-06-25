@@ -1,5 +1,5 @@
 /**
- *  jQuery.servercomm plugin -- Simple UI for $.ajax()
+ *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or the GNU General Public License (GPL) Version 2
  *  Date:
@@ -28,10 +28,13 @@
 ( function(window, document, $) {
 
 
-    //
-    // --PRIVATE VARIABLES
-    //
-    var ie6 = ($.browser.msie && parseInt($.browser.version, 10) === 6),
+    var
+        //
+        // --PRIVATE VARIABLES
+        //
+
+        // see if we are serving to IE6 -- TODO: change to feature detection
+        ie6 = ($.browser.msie && parseInt($.browser.version, 10) === 6),
 
         // the serverComm plugin stylesheet
         styleText = [
@@ -62,12 +65,16 @@
             html : "<span class='sc_blue'><img /> <span></span></span>"
         }),
 
+        // this is the part of the UI prompt that is visible to the user
         contactContainer = contactPromptElement.find("> span"),
 
+        // usually an animated gif
         contactGear = contactPromptElement.find("img"),
 
+        // element (span) containing the UI prompt text
         contactText = contactPromptElement.find("span span"),
 
+        // used with setInterval()
         timerID,
 
         // counter for the number of attempts during for the current "connection"
@@ -82,10 +89,17 @@
         inprocess       = false,
 
 
-    //
-    // --PRIVATE FUNCTIONS
-    //
-        // function called after all automatic attempts have failed
+        //
+        // --PRIVATE FUNCTIONS
+        //
+
+        /**
+         * giveUp() is called after all automatic attempts have failed
+         *
+         * @param   {String} errorMessage contains the message determined
+         * in the error callback defined in contactServer()
+         *
+         */
         giveUp = function(errorMessage) {
 
             var options = $.serverComm.options;
@@ -99,12 +113,12 @@
                     options.giveupCallback.call();
                 }
             }
-    
+
             // set requestAttempts back to 1 to get ready for the next time
             requestAttempts = 1;
 
             contactPromptElement.fadeTo("fast", 0, function() {
-                
+
                 contactPromptElement.detach()
                     .removeAttr("style"); // remove the opacity value
                 contactContainer.removeClass("sc_red").addClass("sc_blue")
@@ -119,13 +133,19 @@
 
         },
 
-        // function called when $.ajax() returns an error
+        /**
+         * ajaxProblem() is called when $.ajax() returns an error
+         *
+         * @param   {String} errorMessage contains the message determined
+         * in the error callback defined in contactServer()
+         *
+         * possible values for errorMessage are:
+         * RETURNED BY PHP PAGE: auth failure, database failure, POST failure, Unauthorized access
+         * RETURNED BY $.ajax(): timeout, "internet error" (e.g., 404),
+         * RETURNED BY $.servercomm: ajax failure, unknown
+         *
+         */
         ajaxProblem = function(errorMessage) {
-
-            // possible values for errorMessage are:
-            // RETURNED BY PHP PAGE: auth failure, database failure, POST failure, Unauthorized access
-            // RETURNED BY $.ajax(): timeout, "internet error" (e.g., 404),
-            // RETURNED BY $.servercomm: ajax failure, unknown
 
             // set the activeRequest to null so that we can tell the difference between
             // an active XHR connection (activeRequest && inprocess) and the "please try
@@ -154,6 +174,7 @@
 
             // try the request automatically
             if (requestAttempts <= $.serverComm.options.autoRetrys) {
+
                 contactContainer.removeClass("sc_blue").addClass("sc_yellow");
                 contactGear.attr("src", options.problemImagePath);
                 contactText.html("There's been a problem &mdash; Trying again. . . " +
@@ -166,6 +187,7 @@
             }
             // give up after the number of auto retries configured in options
             else {
+
                 contactContainer.removeClass("sc_yellow").addClass("sc_red")
                     .attr("title", errorMessage);
                 contactGear.css( { display:"none" } );
@@ -176,12 +198,18 @@
                 // then unbind the click handler -- required to ensure that
                 // the giveupCallback is invoked.
                 $(document).one("click", function() {
+
                     if (contactPromptElement.length === 1) {
+
                         giveUp(errorMessage);
                     }
                 });
             }
         };
+
+    //
+    // END OF var STATEMENT
+    //
 
 
     //
@@ -201,12 +229,15 @@
         // [ http://www.phpied.com/dynamic-script-and-style-elements-in-ie/ ]
         // if this is IE
         if (styleElement[0].styleSheet) {
+
             styleElement[0].styleSheet.cssText = styleText;
         }
         // all other browsers
         else {
+
             styleElement.text(styleText);
         }
+
         styleElement.prependTo("head");
 
         // set the initial UI prompt text
@@ -214,7 +245,6 @@
 
         // set the initial UI "busy" image src attribute
         contactGear.attr("src", options.contactImagePath);
-
     });
 
 
@@ -223,6 +253,7 @@
     //
     $.serverComm = {
 
+        // PUBLIC PROPERTY -- serverComm default option settings
         options : {
             
             // url that the request will be sent to
@@ -271,6 +302,16 @@
         },
 
         //function to init ServerComm
+
+        /**
+         * PUBLIC METHOD
+         * configure() is called to set serverComm options other than by
+         * passing an object to contactServer()
+         *
+         * @param   {Object} config contains the option properties and their
+         * values to be changed
+         *
+         */
         configure : function(config) {
 
             // get the user submitted configuration options for this call
@@ -279,15 +320,32 @@
 
         },
 
+        /**
+         * PUBLIC METHOD
+         * activeConnection() returns the current state of the XHR connection
+         *
+         * (!activeRequest && !inprocess) --> no active connection -- FALSE
+         * (!activeRequest &&  inprocess) --> please try again prompt is showing -- FALSE
+         * ( activeRequest &&  inprocess) --> active connection -- TRUE
+         *
+         * @return  {Boolean} containing the current state of the XHR connection.
+         */
         activeConnection : function() {
 
-            // (!activeRequest && !inprocess) --> no active connection -- FALSE
-            // (!activeRequest && inprocess) --> please try again prompt is showing -- FALSE
-            // (activeRequest && inprocess) --> active connection -- TRUE
             return (activeRequest && inprocess);
+
         },
 
         // display the in-process warning
+        /**
+         * PUBLIC METHOD
+         * inprocessWarning() displays an absolute positioned prompt in the
+         * middle fo the user's screen saying "Please Wait!"
+         *
+         * Used in conjunction with activeConnection() to prevent users
+         * from starting multiple XHR connections.
+         * 
+         */
         inprocessWarning : function() {
 
             var $window = $(window),
@@ -314,10 +372,19 @@
 
         },
 
-        // function called to send an ajax request to the server
+        /**
+         * PUBLIC METHOD
+         * contactServer() sends an XHR request to the server
+         *
+         * ALL requests use POST -- ALL requests use a text datatype
+         *
+         * @param   {Object} config contains the option properties and their
+         * values to be changed
+         *
+         */
         contactServer : function(config) {
 
-            // get the user submitted configuration options for this call
+            // get the user submitted configuration options
             config = config || {};
             this.options = $.extend(this.options, config);
 
@@ -334,6 +401,7 @@
 
                     // show the "contacting" server prompt
                     if (requestAttempts === 1) {
+
                         contactText.html($.serverComm.options.contactPromptText);
                         contactGear.attr("src", $.serverComm.options.contactImagePath);
                     }
@@ -350,20 +418,28 @@
                             timeout  : $.serverComm.options.autoTimeout,
 
                             error : function(xhr, jMessage, e) {
+
                                 var errorMessage = "";
 
                                 if (jMessage === "timeout") {
+
                                     errorMessage = jMessage;
                                 }
+
                                 else {
+
                                     if (jMessage === "error") {
+
                                         //errorMessage = xhr.status + ": " + xhr.statusText;
                                         errorMessage = "internet error";
                                     }
+
                                     else {
+
                                         errorMessage = "unknown";
                                     }
                                 }
+
                                 ajaxProblem(errorMessage);
                             },
 
@@ -375,7 +451,7 @@
                                 // the response text string can have multiple components separated
                                 // by $.serverComm.options.responseSeparator the first component MUST
                                 // be the return status (e.g., "success", "database failure")
-                                // the second component can be data returned in the response string
+                                // the subsequent component can be data returned in the response string
 
                                 responseStatus = (response.indexOf(options.responseSeparator) === -1) ? response : response.split("|")[0];
 
