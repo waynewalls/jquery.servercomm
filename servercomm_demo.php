@@ -6,6 +6,17 @@
  */
 
 
+if (function_exists ('ini_set'))
+{
+   //Use cookies to store the session ID on the client side
+   @ ini_set ('session.use_only_cookies', 1);
+   //Disable transparent Session ID support
+   @ ini_set ('session.use_trans_sid',    0);
+}
+
+session_name("servercomm");
+session_start();
+
 function remove_magic_quotes(&$array) {
 
     foreach ($array as $key => $value) {
@@ -43,13 +54,30 @@ else
 
 
 if ($_POST["test_value"] == "success") {
+
     echo("success");
 }
 else if ($_POST["test_value"] == "success with data") {
+
     echo('success| { "key1":"value1", "key2":"value2" } ');
 }
+else if ($_POST["test_value"] == "failure-success") {
+
+    $_SESSION["retry"] = (!isset($_SESSION["retry"]) || $_SESSION["retry"] == 0) ? 1 : $_SESSION["retry"];
+
+    if ($_SESSION["retry"] < 3) {
+        $_SESSION["retry"] = $_SESSION["retry"] + 1;
+        //echo($_SESSION["retry"]);
+        sleep(8);
+    }
+    else {
+        $_SESSION["retry"] = 0;
+        echo('success| { "key1":"value1", "key2":"value2" } ');
+    }
+}
 else if ($_POST["test_value"] == "failure") {
-    sleep(10);
+
+    sleep(8);
 }
 
 
