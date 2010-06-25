@@ -1,11 +1,11 @@
 <?php
 /**
  * Database parameters and utility functions
- * @author     Wayne Walls <wwalls@anacapasciences.com>
+ * @author     Wayne Walls wfwalls(at)gmail(dot)com
  */
 
 
-if (!defined('SC_TEST')) {
+if (!defined('SERVERCOMM')) {
     die('Unauthorized access');
 }
 

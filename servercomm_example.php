@@ -2,11 +2,11 @@
 /**
  * The script receives an ajax request for processing
  *
- * @author Wayne Walls <wwalls@anacapasciecnes.com>
+ * @author Wayne Walls wfwalls(at)gmail(dot)com
  */
 
 
-define('SC_TEST', 1);
+define('SERVERCOMM', 1);
 
 
 /**
@@ -20,9 +20,6 @@ require_once('common.php');
 
 
 // setup the database
-//$hostname         = "";
-//$databaseUser     = "";
-//$databasePassword = "";
 require_once('database.php');
 
 //setup a database connection
@@ -111,31 +108,79 @@ else
     die("POST failure");
 }
 
-//*
-sleep(10);
-//*/
-
-// store the new submission in the database
-$time = gmmktime();
-$query = "INSERT INTO test_table VALUES (
-        NULL,
-        '{$_REQUEST['test_id']}',
-        '{$_REQUEST['test_value']}',
-        '{$time}')";
 
 
-// Execute the query
-if (!$result = @ mysql_query($query, $connection)) {
+// ****
+// **** EXAMPLE MySQL QUERIES  AND RETURNS TO SERVERCOMM ****
+// ****
 
-    // showerror();
-    die("database failure");
-}
-else
-{
-    echo("success");
-    //echo("database failure");
-    //echo('success| { "property1":"value1", "property2":"value2" } ');
-}
+//if ($_REQUEST['action'] == "add")
+//{
+//    $content['date']          = gmmktime();
+//    $content['username']      = $USERINFO['user'];
+//    $content['ft_exercise']   = $_REQUEST['ft_exercise'];
+//    $content['response_text'] = $_REQUEST['response_text'];
+//
+//
+//    // store the new response in the database
+//    $query = "INSERT INTO freetext VALUES
+//      ( NULL,
+//       '{$content['date']}',
+//       '{$content['username']}',
+//       '{$content['ft_exercise']}',
+//       '{$content['response_text']}')";
+//
+//
+//    // Execute the query
+//    if (!$result = @ mysql_query ($query, $connection))
+//    {
+//        die("database failure");
+//    }
+//    else
+//    {
+//        echo("success" . "|" . mysql_insert_id());
+//    }
+//}
+//else if ($_REQUEST['action'] == "edit")
+//{
+//    $content['responseid']      = $_REQUEST['responseid'];
+//    $content['response_text']   = $_REQUEST['response_text'];
+//
+//
+//    // store the new response in the database
+//    $query = "UPDATE freetext SET responseText = '{$content['response_text']}' WHERE responseID = '{$content['responseid']}'";
+//
+//
+//    // Execute the query
+//    if (!$result = @ mysql_query ($query, $connection))
+//    {
+//        die("database failure");
+//    }
+//    else
+//    {
+//        echo("success");
+//    }
+//}
+//else if ($_REQUEST['action'] == "delete")
+//{
+//    $content['responseid']   = $_REQUEST['responseid'];
+//
+//
+//    // store the new response in the database
+//    $query = "DELETE FROM freetext WHERE responseID = '{$content['responseid']}'";
+//
+//
+//    // Execute the query
+//    if (!$result = @ mysql_query ($query, $connection))
+//    {
+//        die("database failure");
+//    }
+//    else
+//    {
+//        echo("success");
+//    }
+//}
+
 
 exit;
 
