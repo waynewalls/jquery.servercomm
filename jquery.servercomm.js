@@ -36,7 +36,7 @@
         // the serverComm plugin stylesheet
         styleText = [
             // stop "jittering" during scrolling in IE6 [ http://www.webmasterworld.com/css/3592524.htm ]
-            (ie6) ? "body { background: url(images/clearSpacer.gif) fixed; }" : "",
+            (ie6) ? "body { background: url(images/clear1.gif) fixed; }" : "",
             "#sc_contactServerPrompt" + "{ font-weight:bold; text-align:center; left:0px; width:100%;",
             // position:fixed -- include IE6 too
             (ie6) ? "position: absolute; top: expression((document.documentElement || document.body).scrollTop);" : "position:fixed; top:0px;",
@@ -47,7 +47,7 @@
             ".sc_blue { padding:0 1em; background-color:#999; color:#8ef; }",
             ".sc_yellow { padding:0 1em; background-color:#666; color:yellow; }",
             ".sc_green { padding:0 1em; background-color:#666; color:#5f5; }",
-            ".sc_red { padding:0 1em; background-color:#444; color:#f66; }",
+            ".sc_red { padding:0 1em; background-color:#FD2F00; color:white; }",
             ".sc_inprocess { font-size:130%; font-weight:bold; color:white; background-color:red; padding:10px; border:solid 5px #d00; position:absolute }"
         ].join(""),
 
@@ -59,12 +59,12 @@
         // see [ http://www.ajaxload.info/ ] for public domain animated gifs
         contactPromptElement = $("<div />", {
             id : "sc_contactServerPrompt",
-            html : "<span class='sc_blue'><img src='busy999.gif'> <span></span></span>"
+            html : "<span class='sc_blue'><img /> <span></span></span>"
         }),
 
         contactContainer = contactPromptElement.find("> span"),
 
-        contactGear = contactPromptElement.find("img[src*=busy]"),
+        contactGear = contactPromptElement.find("img"),
 
         contactText = contactPromptElement.find("span span"),
 
@@ -111,7 +111,7 @@
                     .removeAttr("title");
                 contactText.html(options.contactPromptText);
                 contactGear.removeAttr("style")
-                    .attr("src", "busy999.gif");
+                    .attr("src", options.contactImagePath);
 
                 // we're done
                 inprocess = false;
@@ -155,7 +155,7 @@
             // try the request automatically
             if (requestAttempts <= $.serverComm.options.autoRetrys) {
                 contactContainer.removeClass("sc_blue").addClass("sc_yellow");
-                contactGear.attr("src", "busy666.gif");
+                contactGear.attr("src", options.problemImagePath);
                 contactText.html("There's been a problem &mdash; Trying again. . . " +
                     requestAttempts + " of " + $.serverComm.options.autoRetrys);
 
@@ -169,7 +169,7 @@
                 contactContainer.removeClass("sc_yellow").addClass("sc_red")
                     .attr("title", errorMessage);
                 contactGear.css( { display:"none" } );
-                contactText.html(options.giveupPromptText + "&nbsp;&nbsp;<img class='sc_hand' src='close.gif'>");
+                contactText.html(options.giveupPromptText + "&nbsp;&nbsp;<img class='sc_hand' src='" + options.closeBoxImagePath + "'>");
 
                 // bind a "ONE" click event handler to the document element...
                 // whatever the user clicks on next will run giveUp() and
@@ -195,6 +195,8 @@
     //
     $(document).ready(function() {
 
+        var options = $.serverComm.options;
+
         // prepend the serverComm stylesheet to the head element
         // [ http://www.phpied.com/dynamic-script-and-style-elements-in-ie/ ]
         // if this is IE
@@ -208,7 +210,10 @@
         styleElement.prependTo("head");
 
         // set the initial UI prompt text
-        contactText.html($.serverComm.options.contactPromptText);
+        contactText.html(options.contactPromptText);
+
+        // set the initial UI "busy" image src attribute
+        contactGear.attr("src", options.contactImagePath);
 
     });
 
@@ -249,6 +254,15 @@
 
             // text for prompt after an automatic retry results in a successful connection
             successPromptText : "Contacting server &mdash; SUCCESS!",
+
+            // path to the image used in the initial "contacting" prompt
+            contactImagePath : "images/busy999.gif",
+
+            // path to the image used in the "there is a problem" prompt
+            problemImagePath : "images/busy666.gif",
+
+            // path to the image used as the close box in "giveup" prompt
+            closeBoxImagePath : "images/close.gif",
 
             // character used to separate response status (e.g., success, database failure)
             // from data in the XHR text response string
@@ -321,6 +335,7 @@
                     // show the "contacting" server prompt
                     if (requestAttempts === 1) {
                         contactText.html($.serverComm.options.contactPromptText);
+                        contactGear.attr("src", $.serverComm.options.contactImagePath);
                     }
                     contactPromptElement.appendTo("body");
 
@@ -393,7 +408,7 @@
                                                 contactContainer.removeClass("sc_green").addClass("sc_blue");
                                                 contactText.html(options.contactPromptText);
                                                 contactGear.removeAttr("style")
-                                                    .attr("src", "busy999.gif");
+                                                    .attr("src", options.contactImagePath);
                                             });
 
                                         }, 3000);
