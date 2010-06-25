@@ -1,3 +1,17 @@
+<?PHP
+
+if (function_exists ('ini_set'))
+{
+   //Use cookies to store the session ID on the client side
+   @ ini_set ('session.use_only_cookies', 1);
+   //Disable transparent Session ID support
+   @ ini_set ('session.use_trans_sid',    0);
+}
+
+session_name("servercomm");
+session_start();
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
         "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -9,6 +23,8 @@
         <title>serverComm Plugin Demonstration</title>
 
         <style type="text/css">
+
+            .pageWarning { font-size:75%; color:#d00; }
 
             .prompt { font-weight:bold; color:#009; margin:0 0 0.15em 0; }
 
@@ -22,6 +38,7 @@
             #return span { background-color:#ccc }
             #data span { background-color:#ccf }
 
+            /* style for the alert that appears if no radio button is selected before submission */
             .demo_warning { font-size:90%; font-weight:bold; color:white; background-color:#000; padding:2px 5px; border:solid 2px #555; position:absolute }
 
             /* style the serverComm plugin UI prompt */
@@ -34,6 +51,8 @@
 
     <body>
 
+        <div class="pageWarning">[ session cookies required ]</div>
+
         <h3>jQuery serverComm Plugin Demonstration</h3>
 
         <div class="prompt">Select a connection test type then press Submit:</div>
@@ -42,7 +61,7 @@
 
             <label><input type="radio" name="test_value" value="success" /> successful connection</label>
             <label><input type="radio" name="test_value" value="success with data" /> success with returned data</label><br>
-            <label><input type="radio" name="test_value" value="failure-success" /> initial failure (timeout) then success</label><br>
+            <label><input type="radio" name="test_value" value="failure-success" /> initial failure (timeout) then success (with data)</label><br>
             <label><input type="radio" name="test_value" value="failure" /> failed connection (timeout)</label><br>
             <button>Submit</button>
 
@@ -56,7 +75,7 @@
             // load jQuery from Google's CDN
         </script>
 
-        <script type="text/javascript" src="jquery.servercomm.js">
+        <script type="text/javascript" src="jquery.servercomm-yui-min.js">
             // load the jquery.servercomm plugin
         </script>
 
