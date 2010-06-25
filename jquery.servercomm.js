@@ -319,6 +319,9 @@
                     inprocess = true;
 
                     // show the "contacting" server prompt
+                    if (requestAttempts === 1) {
+                        contactText.html($.serverComm.options.contactPromptText);
+                    }
                     contactPromptElement.appendTo("body");
 
                     try {

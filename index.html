@@ -35,7 +35,7 @@
 
             <label><input type="checkbox" name="test_value " value="test"/> test</label>
 
-            <button>Submit</button>
+            <button>Submit1</button><button>Submit2</button>
 
             <div id="return">Request status: <span></span></div>
 
@@ -89,7 +89,7 @@
 
                 $(window).bind("load", function() {
 
-                    $("button:contains(Submit)").bind("click", function() {
+                    $("button:contains(Submit1)").bind("click", function() {
 
                         var returnDisplay = $("#return span"),
                             dataDisplay   = $("#data span");
@@ -110,6 +110,69 @@
                             $.serverComm.contactServer({
                                 url        : "test_submit.php",
                                 dataObject : { test_id:0, test_value:"test" },
+
+                                giveupCallback : function() {
+                                    console.log("giveup")
+                                },
+
+                                errorCallback : function(error, request) {
+
+                                    var returnText    = returnDisplay.text();
+
+                                    returnDisplay.css( { padding:"0 0.5em" } );
+                                    returnDisplay.text( returnText + request + ") " + error + " ");
+                                },
+
+                                successCallback : function(response, request) {
+
+                                    var returnText    = returnDisplay.text(),
+                                        responseStatus,
+                                        dataString;
+
+                                    responseStatus = (response.indexOf($.serverComm.options.responseSeparator) === -1) ? response : response.split("|")[0];
+                                    dataString     = (response.indexOf($.serverComm.options.responseSeparator) === -1) ? "" : response.split("|")[1];
+
+                                    returnDisplay.css( { padding:"0 0.5em" } );
+                                    returnDisplay.text( returnText + request + ") " + responseStatus + " ");
+
+                                    if (dataString) {
+                                        dataDisplay.css({ padding:"0 0.5em" });
+                                        dataDisplay.text($.trim(dataString));
+                                    }
+                                }
+                            });
+
+                            return true;
+                        }
+
+                    });
+
+
+                    $("button:contains(Submit2)").bind("click", function() {
+
+                        var returnDisplay = $("#return span"),
+                            dataDisplay   = $("#data span");
+
+                        returnDisplay.empty();
+                        returnDisplay.css( { padding:"0" } );
+                        dataDisplay.empty();
+                        dataDisplay.css( { padding:"0" } );
+
+                        if ($.serverComm.activeConnection()) {
+
+                            $.serverComm.inprocessWarning();
+                            return false;
+                        }
+
+                        else {
+
+                            $.serverComm.contactServer({
+                                url        : "test_submit.php",
+                                dataObject : { test_id:0, test_value:"test" },
+
+                                contactPromptText:"Contacting...",
+                                successPromptText:"Contacting... &mdash; SUCCESS!",
+                                autoRetrys:3,
 
                                 giveupCallback : function() {
                                     console.log("giveup")
