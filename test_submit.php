@@ -133,6 +133,8 @@ if (!$result = @ mysql_query($query, $connection)) {
 else
 {
     echo("success");
+    //echo("database failure");
+    //echo('success| { "property1":"value1", "property2":"value2" } ');
 }
 
 exit;

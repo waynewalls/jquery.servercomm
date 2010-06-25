@@ -15,8 +15,9 @@
 
             .container { margin-left:1em; }
 
-            #return { margin:1em 0 0 0; }
+            #return, #data { margin:1em 0 0 0; }
             #return span { background-color:#ccc }
+            #data span { background-color:#ccf }
 
             #sc_contactServerPrompt { font-size:100%; font-family:"Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Lucida, Verdana, Helvetica, Arial, sans-serif }
             .sc_red { background-color:#FD2F00; color:white; }
@@ -37,6 +38,8 @@
             <button>Submit</button>
 
             <div id="return">Request status: <span></span></div>
+
+            <div id="data">Returned data: <span></span></div>
 
         </div>
 
@@ -88,10 +91,13 @@
 
                     $("button:contains(Submit)").bind("click", function() {
 
-                        var returnDisplay = $("#return span");
+                        var returnDisplay = $("#return span"),
+                            dataDisplay   = $("#data span");
 
                         returnDisplay.empty();
                         returnDisplay.css( { padding:"0" } );
+                        dataDisplay.empty();
+                        dataDisplay.css( { padding:"0" } );
 
                         if ($.serverComm.activeConnection()) {
 
@@ -119,12 +125,20 @@
 
                                 successCallback : function(response, request) {
 
-                                    var returnText    = returnDisplay.text();
+                                    var returnText    = returnDisplay.text(),
+                                        responseStatus,
+                                        dataString;
+
+                                    responseStatus = (response.indexOf($.serverComm.options.responseSeparator) === -1) ? response : response.split("|")[0];
+                                    dataString     = (response.indexOf($.serverComm.options.responseSeparator) === -1) ? "" : response.split("|")[1];
 
                                     returnDisplay.css( { padding:"0 0.5em" } );
-                                    returnDisplay.text( returnText + request + ") " + response + " ");
+                                    returnDisplay.text( returnText + request + ") " + responseStatus + " ");
 
-                                    console.log("success");
+                                    if (dataString) {
+                                        dataDisplay.css({ padding:"0 0.5em" });
+                                        dataDisplay.text($.trim(dataString));
+                                    }
                                 }
                             });
 

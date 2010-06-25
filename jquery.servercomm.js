@@ -33,7 +33,7 @@
     //
     var ie6 = ($.browser.msie && parseInt($.browser.version, 10) === 6),
 
-        // the serverComm stylesheet
+        // the serverComm plugin stylesheet
         styleText = [
             // stop "jittering" during scrolling in IE6 [ http://www.webmasterworld.com/css/3592524.htm ]
             (ie6) ? "body { background: url(images/clearSpacer.gif) fixed; }" : "",
@@ -248,7 +248,11 @@
             giveupPromptText : "The problem hasn't gone away &mdash; try again later",
 
             // text for prompt after an automatic retry results in a successful connection
-            successPromptText : "Contacting server &mdash; SUCCESS!"
+            successPromptText : "Contacting server &mdash; SUCCESS!",
+
+            // character used to separate response status (e.g., success, database failure)
+            // from data in the XHR text response string
+            responseSeparator : "|"
 
         },
 
@@ -347,11 +351,19 @@
 
                             success : function(response, status) {
 
-                                var options = $.serverComm.options;
+                                var options = $.serverComm.options,
+                                    responseStatus;
 
-                                if (response !== "success") {
+                                // the response text string can have multiple components separated
+                                // by $.serverComm.options.responseSeparator the first component MUST
+                                // be the return status (e.g., "success", "database failure")
+                                // the second component can be data returned in the response string
 
-                                    ajaxProblem(response);
+                                responseStatus = (response.indexOf(options.responseSeparator) === -1) ? response : response.split("|")[0];
+
+                                if (responseStatus !== "success") {
+
+                                    ajaxProblem(responseStatus);
 
                                 }
 
