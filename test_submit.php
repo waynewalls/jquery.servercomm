@@ -111,7 +111,7 @@ else
     die("POST failure");
 }
 
-/*
+//*
 sleep(10);
 //*/
 

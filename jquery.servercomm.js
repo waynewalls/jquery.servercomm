@@ -42,6 +42,7 @@
             (ie6) ? "position: absolute; top: expression((document.documentElement || document.body).scrollTop);" : "position:fixed; top:0px;",
             "}",
             "#sc_contactServerPrompt img { vertical-align:-2px; }",
+            "#sc_contactServerPrompt span { cursor:default; }",
             ".sc_hand { cursor:pointer; }",
             ".sc_blue { padding:0 1em; background-color:#999; color:#8ef; }",
             ".sc_yellow { padding:0 1em; background-color:#666; color:yellow; }",
@@ -50,7 +51,7 @@
             ".sc_inprocess { font-size:130%; font-weight:bold; color:white; background-color:red; padding:10px; border:solid 5px #d00; position:absolute }"
         ].join(""),
 
-        // style element to be inserted once the document is ready
+        // style element to be inserted once the DOM is ready
         styleElement = $('<style />').attr("type", "text/css"),
 
         // local cache for the ajax UI prompt -- it will be appended to
@@ -58,7 +59,7 @@
         // see [ http://www.ajaxload.info/ ] for public domain animated gifs
         contactPromptElement = $("<div />", {
             id : "sc_contactServerPrompt",
-            html : "<span class='sc_blue'><img src='busy999.gif'> <span>Contacting server</span></span>"
+            html : "<span class='sc_blue'><img src='busy999.gif'> <span></span></span>"
         }),
 
         contactContainer = contactPromptElement.find("> span"),
@@ -106,8 +107,9 @@
                 
                 contactPromptElement.detach()
                     .removeAttr("style"); // remove the opacity value
-                contactContainer.removeClass("sc_red").addClass("sc_blue");
-                contactText.text("Contacting server");
+                contactContainer.removeClass("sc_red").addClass("sc_blue")
+                    .removeAttr("title");
+                contactText.html(options.contactPromptText);
                 contactGear.removeAttr("style")
                     .attr("src", "busy999.gif");
 
@@ -164,9 +166,10 @@
             }
             // give up after the number of auto retries configured in options
             else {
-                contactContainer.removeClass("sc_yellow").addClass("sc_red");
+                contactContainer.removeClass("sc_yellow").addClass("sc_red")
+                    .attr("title", errorMessage);
                 contactGear.css( { display:"none" } );
-                contactText.html("The problem hasn't gone away &mdash; try again later&nbsp;&nbsp;<img class='sc_hand' src='close.gif'>");
+                contactText.html(options.giveupPromptText + "&nbsp;&nbsp;<img class='sc_hand' src='close.gif'>");
 
                 // bind a "ONE" click event handler to the document element...
                 // whatever the user clicks on next will run giveUp() and
@@ -204,6 +207,9 @@
         }
         styleElement.prependTo("head");
 
+        // set the initial UI prompt text
+        contactText.html($.serverComm.options.contactPromptText);
+
     });
 
 
@@ -233,17 +239,26 @@
             errorCallback   : null,
 
             // callback for page specific processing in success()
-            successCallback : null
+            successCallback : null,
+
+            // prompt text for the initial "contacting" prompt
+            contactPromptText : "Contacting server",
+
+            // prompt text to be shown when auto retries are exhausted and serverComm gives up
+            giveupPromptText : "The problem hasn't gone away &mdash; try again later",
+
+            // text for prompt after an automatic retry results in a successful connection
+            successPromptText : "Contacting server &mdash; SUCCESS!"
+
         },
 
         //function to init ServerComm
-        init   : function(callback) {
-            // do page specific initialization stuff in callback
-            if (callback) {
-                if ($.isFunction(callback)) {
-                    callback.call();
-                }
-            }
+        configure : function(config) {
+
+            // get the user submitted configuration options for this call
+            config = config || {};
+            this.options = $.extend(this.options, config);
+
         },
 
         activeConnection : function() {
@@ -332,6 +347,8 @@
 
                             success : function(response, status) {
 
+                                var options = $.serverComm.options;
+
                                 if (response !== "success") {
 
                                     ajaxProblem(response);
@@ -347,7 +364,7 @@
                                         contactPromptElement.detach();
                                         contactGear.css( { display:"none" } );
                                         contactContainer.removeClass("sc_yellow").addClass("sc_green");
-                                        contactText.html("Contacting server &mdash; SUCCESS!");
+                                        contactText.html(options.successPromptText);
                                         contactPromptElement.appendTo("body");
 
                                         // give the user a chance to see the success prompt
@@ -359,7 +376,7 @@
                                                 contactPromptElement.detach()
                                                     .removeAttr("style"); // remove the opacity value
                                                 contactContainer.removeClass("sc_green").addClass("sc_blue");
-                                                contactText.text("Contacting server");
+                                                contactText.html(options.contactPromptText);
                                                 contactGear.removeAttr("style")
                                                     .attr("src", "busy999.gif");
                                             });

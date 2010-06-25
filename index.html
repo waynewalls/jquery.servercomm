@@ -36,7 +36,7 @@
 
             <button>Submit</button>
 
-            <div id="return">Request return: <span></span></div>
+            <div id="return">Request status: <span></span></div>
 
         </div>
 
@@ -77,6 +77,12 @@
 
 
             ( function() {
+
+                $.serverComm.configure( {
+                    contactPromptText:"&quot;Submitting&quot; your story",
+                    successPromptText:"&quot;Submitting&quot; your story &mdash; SUCCESS!",
+                    autoRetrys:3
+                } );
 
                 $(window).bind("load", function() {
 
