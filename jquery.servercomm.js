@@ -299,8 +299,6 @@
 
         },
 
-        //function to init ServerComm
-
         /**
          * PUBLIC METHOD
          * configure() is called to set serverComm options that will act as
@@ -334,7 +332,6 @@
 
         },
 
-        // display the in-process warning
         /**
          * PUBLIC METHOD
          * inprocessWarning() displays an absolute positioned prompt in the
