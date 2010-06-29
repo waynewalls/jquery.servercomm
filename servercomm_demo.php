@@ -57,11 +57,11 @@ if ($_POST["test_value"] == "success") {
 
     echo("success");
 }
-else if ($_POST["test_value"] == "success with data") {
+else if ($_POST["test_value"] == "success_with_data") {
 
     echo('success| { "key1":"value1", "key2":"value2" } ');
 }
-else if ($_POST["test_value"] == "failure-success") {
+else if ($_POST["test_value"] == "failure_success") {
 
     $_SESSION["retry"] = (!isset($_SESSION["retry"]) || $_SESSION["retry"] == 0) ? 1 : $_SESSION["retry"];
 

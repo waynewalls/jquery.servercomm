@@ -2,9 +2,9 @@
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or the GNU General Public License (GPL) Version 2
- *  Date:
+ *  Date: 28 June 2010
  *  @author Wayne Walls
- *  @version
+ *  @version 0.9
  *
  */
 
@@ -155,8 +155,6 @@
 
             errorMessage = errorMessage || "";
 
-            console.log(errorMessage);
-
             activeRequest = null;
 
 
@@ -305,8 +303,8 @@
 
         /**
          * PUBLIC METHOD
-         * configure() is called to set serverComm options other than by
-         * passing an object to contactServer()
+         * configure() is called to set serverComm options that will act as
+         * default values for all subsequent requests.
          *
          * @param   {Object} config contains the option properties and their
          * values to be changed
@@ -390,8 +388,6 @@
 
             //see if there is an active xhr request -- if so wait
             timerID = setInterval(function() {
-
-                console.log(activeRequest, inprocess, requestAttempts);
 
                 if (!activeRequest && !inprocess) {
 
