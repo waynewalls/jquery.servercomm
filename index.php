@@ -77,6 +77,12 @@ session_start();
 
         <p>
 
+            <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
+
+            Version: 0.9<br>
+            Date: 28 June 2010<br>
+            License: MIT License or GNU General Public License (GPL) Version 2<br><br>
+
             <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
             $.ajax().  It was developed for a training applications whose primary user group was in West Africa.
             This region of the world&mdash;at the time&mdash;was served by a single Internet backbone traveling
@@ -292,7 +298,7 @@ session_start();
             // load the jquery.hoverIntent and jquery.cookie plugin
         </script>
 
-        <script type="text/javascript" src="jquery.servercomm-0.9.min.js">
+        <script type="text/javascript" src="jquery.servercomm.js">
             // load the jquery.servercomm plugin
         </script>
 

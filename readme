@@ -1,5 +1,10 @@
 jQuery serverComm PLUGIN
 
+Version: 0.9
+Date: 28 June 2010
+License: MIT License or GNU General Public License (GPL) Version 2
+Example at: [ http://waynewalls.com/servercomm/ ]
+
 ** BACKGROUND. This plugin provides a user interface (UI) and simple API for
 $.ajax().  It was developed for a training applications whose primary user
 group was in West Africa. This region of the world--at the time--was served by

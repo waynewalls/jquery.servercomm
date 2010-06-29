@@ -1,7 +1,7 @@
 /**
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
- *  License: MIT License or the GNU General Public License (GPL) Version 2
+ *  License: MIT License or GNU General Public License (GPL) Version 2
  *  Date: 28 June 2010
  *  @author Wayne Walls
  *  @version 0.9
@@ -451,15 +451,15 @@
 
                                 responseStatus = (response.indexOf(options.responseSeparator) === -1) ? response : response.split("|")[0];
 
+                                // if the server-side script has returned an error
                                 if (responseStatus !== "success") {
 
                                     ajaxProblem(responseStatus);
 
                                 }
-
+                                // else there have been auto retries resulting in a success or the first connection was a success
                                 else {
-
-                                    // if there were multiple attempts to contact the server -- put up a success message
+                                    // mulitple with success
                                     if (requestAttempts > 1) {
 
                                         activeRequest = null;
@@ -481,12 +481,15 @@
                                                 contactText.html(options.contactPromptText);
                                                 contactGear.removeAttr("style")
                                                     .attr("src", options.contactImagePath);
+
+                                                // set the in process global flag back to false
+                                                inprocess = false;
                                             });
 
-                                        }, 3000);
+                                        }, 2000);
 
                                     }
-
+                                    // else the original attempt was a success
                                     else {
 
                                         activeRequest = null;
@@ -494,11 +497,15 @@
                                         setTimeout(function() {
 
                                             contactPromptElement.fadeTo("slow", 0, function() {
+
                                                 contactPromptElement.detach()
                                                     .removeAttr("style"); // remove the opacity value
+
+                                                // set the in process global flag back to false
+                                                inprocess = false;
                                             });
 
-                                        }, 1000);
+                                        }, 750);
 
                                     }
 
@@ -513,8 +520,6 @@
                                     // we are done
                                     // set requestAttempts back to 1 in case there were multiple requests
                                     requestAttempts = 1;
-                                    // set the in process global flag back to false
-                                    inprocess = false;
                                 }
                             }
                         });
