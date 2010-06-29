@@ -288,12 +288,8 @@ session_start();
             // load jQuery from Google's CDN
         </script>
 
-        <script type="text/javascript" src="jquery.hoverIntent-r5.min.js">
-            // load the jquery.hoverIntent plugin
-        </script>
-
-        <script type="text/javascript" src="jquery.cookie.min.js">
-            // load the jquery.cookie plugin
+        <script type="text/javascript" src="jquery/sc-combined.min.js">
+            // load the jquery.hoverIntent and jquery.cookie plugin
         </script>
 
         <script type="text/javascript" src="jquery.servercomm.js">
