@@ -292,7 +292,7 @@ session_start();
             // load the jquery.hoverIntent and jquery.cookie plugin
         </script>
 
-        <script type="text/javascript" src="jquery.servercomm.js">
+        <script type="text/javascript" src="jquery.servercomm-0.9.min.js">
             // load the jquery.servercomm plugin
         </script>
 
