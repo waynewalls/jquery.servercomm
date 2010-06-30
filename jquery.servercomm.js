@@ -9,6 +9,13 @@
  */
 
 
+// TODO: change ie6 detection from browser sniffing to feature detection
+// TODO: add the ability to cancel during automatic retries
+// TODO: create private functions to replace all anonymous functions
+// TODO: describe serverComm styles and stylesheet in the documentation
+// TODO: add list of supported browsers to documentation
+
+
 /*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
 /*global window, jQuery */
 
@@ -33,7 +40,7 @@
         // --PRIVATE VARIABLES
         //
 
-        // see if we are serving to IE6 -- TODO: change to feature detection
+        // see if we are serving to IE6
         ie6 = ($.browser.msie && parseInt($.browser.version, 10) === 6),
 
         // the serverComm plugin stylesheet
