@@ -1,4 +1,4 @@
-### jQuery serverComm Plugin ###
+# jQuery serverComm Plugin #
 
 Version: 0.9  
 Date: 28 June 2010  
@@ -22,13 +22,11 @@ of sending data to the server and the text data type for receiving responses
 from the server.  To keep the UI simple, it currently handles only one request
 at a time.
 
----
 
 ## serverComm DEPENDENCIES ##
 
 Requires jQuery v1.4;  there are no other dependencies.
 
----
 
 ## serverComm USAGE ##
 
@@ -42,8 +40,7 @@ Example:
         dataObject:{ key1:value1, key2,value2 },
         successCallback:onSuccess   
     } );
-
----
+    
 
 ## serverComm OPTIONS (type) [ default value ] ##
 
@@ -102,7 +99,6 @@ shown after all automatic retries have failed.
 The character used by the server-side script to separate the connection status
 from data being returned to the client.
 
----
 
 ## serverComm PUBLIC METHODS ##
 
