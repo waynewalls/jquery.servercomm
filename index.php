@@ -24,9 +24,11 @@ session_start();
 
         <style type="text/css">
 
-            body { font-size:90%; font-family:"Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Lucida, Verdana, Helvetica, Arial, sans-serif }
+            body { font-size:85%; font-family:arial, helvetica, sans-serif; line-height:1.35em; }
 
-            .bold { font-weight:bold; font-size:130%; color:#009; }
+            pre { font-size:108%; margin-bottom:2px; }
+
+            .bold { font-weight:bold; font-size:125%; color:#009; }
 
             .pHeader { font-weight:bold; color:#009; }
 
@@ -51,7 +53,7 @@ session_start();
             .demo_warning { font-size:90%; font-weight:bold; color:white; background-color:#00a; padding:4px 5px 6px 5px; border:solid 2px #005; position:absolute }
 
             .optionsPrompt { font-weight:bold; color:#009; margin:2em 0 0 0; }
-            .options { margin:1.5em 0 0 1em; }
+            .options { margin:2em 0 0 1em;}
 
             /* style the serverComm plugin UI prompt */
             #sc_contactServerPrompt { font-size:110%; }
@@ -62,7 +64,8 @@ session_start();
 
             <style type="text/css">
 
-                .bold { font-weight:bold; font-size:115%; color:#009; }
+                pre { font-size:100%; }
+                .bold { font-weight:bold; font-size:110%; color:#009; }
 
             </style>
 
@@ -283,7 +286,7 @@ session_start();
 
         </div>
 
-        <div class="options">
+        <div class="options" style="margin-bottom:2em; ">
 
             <pre>$.serverComm.<span class="bold">contactServer</span>( config )</pre>
             Initiates a serverComm request where config is an optional object containing serverComm options as key/value pairs.
