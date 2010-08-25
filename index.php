@@ -82,8 +82,8 @@ session_start();
 
             <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
 
-            Version: 0.9<br>
-            Date: 28 June 2010<br>
+            Version: 0.91<br>
+            Date: 25 August 2010<br>
             License: MIT License or GNU General Public License (GPL) Version 2<br><br>
 
             <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
