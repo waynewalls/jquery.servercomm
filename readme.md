@@ -47,7 +47,7 @@ Example:
 The URL to assign to the $.ajax() URL property
 
 `$.serverComm.options.method (string) [ empty string ]`  
-The URL to assign to the $.ajax() URL property
+The method to assign to the $.ajax() type property
 
 `$.serverComm.options.dataObject (object) [ null ]`  
 An object to be assigned to the $.ajax() data property
