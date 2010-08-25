@@ -264,6 +264,9 @@
             // url that the request will be sent to
             url             : "",
 
+            // method to be used by the AJAX request
+            method          : "POST",
+
             // data to be submitted to the server
             dataObject      : null,
 
@@ -412,8 +415,8 @@
                         activeRequest = $.ajax( {
 
                             url      : $.serverComm.options.url,
-                            type     : "POST",
-                            data     :  $.serverComm.options.dataObject,
+                            type     : $.serverComm.options.method,
+                            data     : $.serverComm.options.dataObject,
                             datatype : "text",
                             timeout  : $.serverComm.options.autoTimeout,
 

@@ -14,10 +14,9 @@ this, we wanted a UI that would keep the user informed about connection status
 and also retry automatically in case of a dropped connection.
 
 
-** LIMITATIONS. At present, the serverComm plugin only supports the POST method
-of sending data to the server and the text data type for receiving responses
-from the server.  To keep the UI simple, it currently handles only one request
-at a time.
+** LIMITATIONS. At present, the serverComm plugin only supports the $.ajax()
+text data type for receiving responses from the server. To keep the UI simple,
+the plugin currently handles only one AJAX request at a time.
 
 
 ** serverComm DEPENDENCIES: Requires jQuery v1.4;  there are no other
@@ -41,6 +40,9 @@ $.serverComm.contactServer( {
 
 $.serverComm.options.url (string) [ empty string ]
 The URL to assign to the $.ajax() URL property
+
+$.serverComm.options.method (string) [ "POST" ]
+The method to assign to the $.ajax() type property 
 
 $.serverComm.options.dataObject (object) [ null ]
 An object to be assigned to the $.ajax() data property

@@ -97,9 +97,9 @@ session_start();
 
         <p>
 
-            <span class="pHeader">Limitations. </span>At present, the serverComm plugin only supports the POST method
-            of sending data to the server and the text data type for receiving responses from the server.  To keep the
-            UI simple, it currently handles only one request at a time.
+            <span class="pHeader">Limitations. </span>At present, the serverComm plugin only supports the
+            $.ajax() text data type for receiving responses from the server.  To keep the UI simple, the plugin
+            currently handles only one AJAX request at a time.
 
         </p>
 
@@ -159,6 +159,13 @@ session_start();
 
             <pre>$.serverComm.options.<span class="bold">url</span> (string) [ empty string ]</pre>
             The URL to assign to the $.ajax() URL property
+
+        </div>
+
+        <div class="options">
+
+            <pre>$.serverComm.options.<span class="bold">method</span> (string) [ "POST" ]</pre>
+            The method to assign to the $.ajax() type property
 
         </div>
 
@@ -413,6 +420,7 @@ session_start();
                                 $.serverComm.contactServer( {
 
                                     url        : "servercomm_demo.php",
+                                    method     : "POST",
                                     dataObject : { test_value : dataToSend },
 
                                     errorCallback : function(error, request) {

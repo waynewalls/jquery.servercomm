@@ -17,10 +17,9 @@ and also retry automatically in case of a dropped connection.
 
 ## LIMITATIONS ##
 
-At present, the serverComm plugin only supports the POST method
-of sending data to the server and the text data type for receiving responses
-from the server.  To keep the UI simple, it currently handles only one request
-at a time.
+At present, the serverComm plugin only supports the $.ajax() text data type
+for receiving responses from the server. To keep the UI simple,the plugin
+currently handles only one AJAX request at a time.
 
 
 ## serverComm DEPENDENCIES ##
@@ -45,6 +44,9 @@ Example:
 ## serverComm OPTIONS (type) [ default value ] ##
 
 `$.serverComm.options.url (string) [ empty string ]`  
+The URL to assign to the $.ajax() URL property
+
+`$.serverComm.options.method (string) [ empty string ]`  
 The URL to assign to the $.ajax() URL property
 
 `$.serverComm.options.dataObject (object) [ null ]`  
