@@ -1,7 +1,7 @@
 # jQuery serverComm Plugin #
 
-Version: 0.9  
-Date: 28 June 2010  
+Version: 0.91 
+Date: 25 August 2010  
 License: MIT License or GNU General Public License (GPL) Version 2   
 Example at: [http://waynewalls.com/servercomm/](http://waynewalls.com/servercomm/)
 

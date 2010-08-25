@@ -2,9 +2,9 @@
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 28 June 2010
+ *  Date: 25 August 2010
  *  @author Wayne Walls
- *  @version 0.9
+ *  @version 0.91
  *
  */
 
