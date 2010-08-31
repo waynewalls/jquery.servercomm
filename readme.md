@@ -43,7 +43,7 @@ Example:
 
 ## serverComm OPTIONS (type) [ default value ] ##
 
-`// serverComm options default values are available in $serverComm.optionDefaults`
+`// serverComm options default values are available in $.serverComm.optionDefaults`
 
 `$.serverComm.options.url (string) [ empty string ]`  
 The URL to assign to the $.ajax() URL property

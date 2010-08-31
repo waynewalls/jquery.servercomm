@@ -157,7 +157,7 @@ session_start();
 
         <div class="options" style="margin-top:0.75em;">
 
-            <pre>// serverComm options default values are available in $serverComm.optionDefaults</pre>
+            <pre>// serverComm options default values are available in $.serverComm.optionDefaults</pre>
 
         </div>
 
