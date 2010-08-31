@@ -82,8 +82,8 @@ session_start();
 
             <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
 
-            Version: 0.91<br>
-            Date: 25 August 2010<br>
+            Version: 0.92<br>
+            Date: 31 August 2010<br>
             License: MIT License or GNU General Public License (GPL) Version 2<br><br>
 
             <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
@@ -146,7 +146,7 @@ session_start();
 
             Example:<br>
             <pre><code>$.serverComm.contactServer( {
-    url:serverComm.php,
+    url:&quot;serverComm.php&quot;,
     dataObject:{ key1:value1, key2,value2 },
     successCallback:onSuccess
 } );</code></pre>
@@ -154,6 +154,12 @@ session_start();
         </div>
 
         <div class="optionsPrompt">serverComm options (type) [ default value ]:</div>
+
+        <div class="options" style="margin-top:0.75em;">
+
+            <pre>// serverComm options default values are available in $serverComm.optionDefaults</pre>
+
+        </div>
 
         <div class="options" style="margin-top:0.75em;">
 
@@ -273,7 +279,7 @@ session_start();
         <div class="options" style="margin-top:0.75em;">
 
             <pre>$.serverComm.<span class="bold">configure</span>( config )</pre>
-            sets serverComm options where config is an object containing new options that will act as default values
+            sets serverComm option defaults where config is an object containing new values that will act as defaults
             for subsequent requests.
 
         </div>
@@ -419,7 +425,7 @@ session_start();
 
                                 $.serverComm.contactServer( {
 
-                                    url        : "servercomm_demo.php",
+                                    // no need for a URL, the default has been configured in the onload event
                                     method     : "POST",
                                     dataObject : { test_value : dataToSend },
 
@@ -510,6 +516,9 @@ session_start();
                     pageLoad.eventHandler_submit_button();
 
                     pageLoad.eventHandler_help();
+
+                    // set the default URL for ALL serverComm requests on this page
+                    $.serverComm.configure( { url: "servercomm_demo.php" } );
 
                 });
 

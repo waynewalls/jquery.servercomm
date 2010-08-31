@@ -1,7 +1,7 @@
 # jQuery serverComm Plugin #
 
-Version: 0.91  
-Date: 25 August 2010  
+Version: 0.92  
+Date: 31 August 2010  
 License: MIT License or GNU General Public License (GPL) Version 2   
 Example at: [http://waynewalls.com/servercomm/](http://waynewalls.com/servercomm/)
 
@@ -35,13 +35,15 @@ where config is an optional object containing serverComm options.
 Example:
 
     $.serverComm.contactServer( {
-        url:serverComm.php,
+        url:"serverComm.php",
         dataObject:{ key1:value1, key2,value2 },
         successCallback:onSuccess   
     } );
     
 
 ## serverComm OPTIONS (type) [ default value ] ##
+
+`// serverComm options default values are available in $serverComm.optionDefaults`
 
 `$.serverComm.options.url (string) [ empty string ]`  
 The URL to assign to the $.ajax() URL property
@@ -105,8 +107,8 @@ from data being returned to the client.
 ## serverComm PUBLIC METHODS ##
 
 `$.serverComm.configure( config )`  
-Sets serverComm options where config is an object containing new options that
-will act as default values for subsequent requests.
+Sets serverComm option defaluts where config is an object containing new values that
+will act as defaults for subsequent requests.
 
 `$.serverComm.activeConnection()`  
 Returns a boolean; true if there is an active serverComm request otherwise

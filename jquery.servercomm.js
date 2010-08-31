@@ -2,9 +2,9 @@
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 25 August 2010
+ *  Date: 31 August 2010
  *  @author Wayne Walls
- *  @version 0.91
+ *  @version 0.92
  *
  */
 
@@ -14,6 +14,7 @@
 // TODO: create private functions to replace all anonymous functions
 // TODO: describe serverComm styles and stylesheet in the documentation
 // TODO: add list of supported browsers to documentation
+// TODO: add a debug option to write error messages to window.console
 
 
 /*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
@@ -259,8 +260,30 @@
     $.serverComm = {
 
         // PUBLIC PROPERTY -- serverComm default option settings
+        optionDefaults : {
+
+            // see below for comments
+            url               : "",
+            method            : "POST",
+            dataObject        : null,
+            autoRetrys        : 4,
+            autoTimeout       : 7000,
+            giveupCallback    : null,
+            errorCallback     : null,
+            successCallback   : null,
+            contactPromptText : "Contacting server",
+            giveupPromptText  : "The problem hasn't gone away &mdash; try again later",
+            successPromptText : "Contacting server &mdash; SUCCESS!",
+            contactImagePath  : "images/busy999.gif",
+            problemImagePath  : "images/busy666.gif",
+            closeBoxImagePath : "images/close.gif",
+            responseSeparator : "|"
+
+        },
+
+        // PUBLIC PROPERTY -- serverComm option settings
         options : {
-            
+
             // url that the request will be sent to
             url             : "",
 
@@ -322,7 +345,7 @@
 
             // get the user submitted configuration options for this call
             config = config || {};
-            this.options = $.extend(this.options, config);
+            this.optionDefaults = $.extend(this.optionDefaults, config);
 
         },
 
@@ -390,8 +413,12 @@
         contactServer : function(config) {
 
             // get the user submitted configuration options
-            config = config || {};
-            this.options = $.extend(this.options, config);
+            if (requestAttempts === 1) {
+
+                config = config || {};
+                this.options = $.extend({}, this.optionDefaults, config);
+                
+            }
 
             //see if there is an active xhr request -- if so wait
             timerID = setInterval(function() {
