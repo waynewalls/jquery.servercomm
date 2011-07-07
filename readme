@@ -19,7 +19,7 @@ text data type for receiving responses from the server. To keep the UI simple,
 the plugin currently handles only one AJAX request at a time.
 
 
-** serverComm DEPENDENCIES: Requires jQuery v1.4;  there are no other
+** serverComm DEPENDENCIES: Requires jQuery v1.4 (or later);  there are no other
 dependencies.
 
 

@@ -1,7 +1,7 @@
 # jQuery serverComm Plugin #
 
-Version: 0.93
-Date: 06 July 2011
+Version: 0.93 
+Date: 06 July 2011 
 License: MIT License or GNU General Public License (GPL) Version 2   
 Example at: [http://waynewalls.com/servercomm/](http://waynewalls.com/servercomm/)
 
@@ -24,7 +24,7 @@ currently handles only one AJAX request at a time.
 
 ## serverComm DEPENDENCIES ##
 
-Requires jQuery v1.4;  there are no other dependencies.
+Requires jQuery v1.4 (or later);  there are no other dependencies.
 
 
 ## serverComm USAGE ##

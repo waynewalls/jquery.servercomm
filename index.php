@@ -134,7 +134,7 @@ session_start();
         <div class="options" style="margin-top:0.75em;">
 
             <pre>$.serverComm</pre>
-            requires jQuery v1.4;  there are no other dependencies.
+            requires jQuery v1.4 (or later);  there are no other dependencies.
 
         </div>
 
