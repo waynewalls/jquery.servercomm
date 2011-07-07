@@ -1,10 +1,10 @@
 /**
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
- *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
+ *  Copyright (c) 2011 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 31 August 2010
+ *  Date: 06 July 2011
  *  @author Wayne Walls
- *  @version 0.92
+ *  @version 0.93
  *
  */
 
@@ -380,7 +380,7 @@
             inprocessElement;
 
             inprocessElement = $("<div />", {
-                className : "sc_inprocess",
+                "class" : "sc_inprocess",
                 text: "Please Wait!"
             }).appendTo("body");
 

@@ -82,8 +82,8 @@ session_start();
 
             <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
 
-            Version: 0.92<br>
-            Date: 31 August 2010<br>
+            Version: 0.93<br>
+            Date: 06 July 2011<br>
             License: MIT License or GNU General Public License (GPL) Version 2<br><br>
 
             <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
@@ -199,7 +199,7 @@ session_start();
         <div class="options">
 
             <pre>$.serverComm.options.<span class=bold>giveupCallback</span> (function(error)) [ null ]</pre>
-            A function that will be called after the last automatic retry.  It is passed the error that it returned
+            A function that will be called after the last automatic retry.  It is passed the error that was returned
             by the server-side script or $.ajax()
 
         </div>
@@ -207,7 +207,7 @@ session_start();
         <div class="options">
 
             <pre>$.serverComm.options.<span class="bold">errorCallback</span> (function(error, request)) [ null ]</pre>
-            A function that will be called before initiating each automatic retry.    It is passed the error that it returned
+            A function that will be called before initiating each automatic retry.    It is passed the error that was returned
             by the server-side script or $.ajax() and the number of request attempts.
 
         </div>
@@ -306,7 +306,7 @@ session_start();
 
         </div>
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
             // load jQuery from Google's CDN
         </script>
 
@@ -391,7 +391,7 @@ session_start();
                                 button = $(this);
 
                                 warning = $("<div />", {
-                                    className : "demo_warning",
+                                    "class" : "demo_warning",
                                     text: " First, select a connection test type!",
                                     css : {
                                         top  : button.offset().top - 1,
@@ -492,7 +492,7 @@ session_start();
                             tdata = tooltipData[ helpImage.prev().find("input")[0].value ];
 
                             tooltip = $("<div />", {
-                                className : "demo_warning",
+                                "class" : "demo_warning",
                                 text: tdata.text,
                                 css : {
                                     width: 250,
