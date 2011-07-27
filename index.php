@@ -71,6 +71,16 @@ session_start();
 
         <![endif]-->
 
+        <!--[if gte IE 9]>
+
+            <style type="text/css">
+
+                #sc_contactServerPrompt { line-height: normal; }
+                
+            </style>
+
+        <![endif]-->
+
     </head>
 
 
@@ -82,8 +92,8 @@ session_start();
 
             <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
 
-            Version: 0.93<br>
-            Date: 06 July 2011<br>
+            Version: 0.94<br>
+            Date: 27 July 2011<br>
             License: MIT License or GNU General Public License (GPL) Version 2<br><br>
 
             <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for

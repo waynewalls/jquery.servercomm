@@ -2,9 +2,9 @@
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2011 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 06 July 2011
+ *  Date: 27 July 2011
  *  @author Wayne Walls
- *  @version 0.93
+ *  @version 0.94
  *
  */
 
@@ -128,11 +128,11 @@
             contactPromptElement.fadeTo("fast", 0, function() {
 
                 contactPromptElement.detach()
-                    .removeAttr("style"); // remove the opacity value
+                    .css("opacity", "");
                 contactContainer.removeClass("sc_red").addClass("sc_blue")
-                    .removeAttr("title");
+                    .attr("title", "");
                 contactText.html(options.contactPromptText);
-                contactGear.removeAttr("style")
+                contactGear.css("display", "")
                     .attr("src", options.contactImagePath);
 
                 // we're done
@@ -510,10 +510,10 @@
 
                                                 // reset the "contacting" prompt for the next request
                                                 contactPromptElement.detach()
-                                                    .removeAttr("style"); // remove the opacity value
+                                                    .css("opacity", "");
                                                 contactContainer.removeClass("sc_green").addClass("sc_blue");
                                                 contactText.html(options.contactPromptText);
-                                                contactGear.removeAttr("style")
+                                                contactGear.css("display", "")
                                                     .attr("src", options.contactImagePath);
 
                                                 // set the in process global flag back to false
@@ -533,7 +533,7 @@
                                             contactPromptElement.fadeTo("slow", 0, function() {
 
                                                 contactPromptElement.detach()
-                                                    .removeAttr("style"); // remove the opacity value
+                                                    .css("opacity", "");
 
                                                 // set the in process global flag back to false
                                                 inprocess = false;
