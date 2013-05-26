@@ -75,7 +75,7 @@
             // position:fixed -- include IE6 too
             ie6 ? "position: absolute; top: expression((document.documentElement || document.body).scrollTop);" : "position:fixed; top:0px;",
             "}",
-            "#sc_contactServerPrompt img { vertical-align:-2px; }",
+            "#sc_contactServerPrompt img { vertical-align:-3px; }",
             "#sc_contactServerPrompt span { cursor:default; }",
             ".sc_hand { cursor:pointer; }",
             ".sc_blue { padding:0 1em; background-color:#999; color:#8ef; }",

@@ -71,16 +71,6 @@ session_start();
 
         <![endif]-->
 
-        <!--[if gte IE 9]>
-
-            <style type="text/css">
-
-                #sc_contactServerPrompt { line-height: normal; }
-                
-            </style>
-
-        <![endif]-->
-
     </head>
 
 
