@@ -1,8 +1,8 @@
 /**
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
  *  Copyright (c) 2011 Wayne Walls - wfwalls(at)gmail(dot)com
- *  License: MIT License or GNU General Public License (GPL) Version 2
  *  Date: 27 July 2011
+ *  @license MIT License or GNU General Public License (GPL) Version 2
  *  @author Wayne Walls
  *  @version 0.94
  *
@@ -17,7 +17,7 @@
 // TODO: add a debug option to write error messages to window.console
 
 
-/*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
+/*jslint browser: true, devel: true, undef: true, nomen: true, bitwise: true, regexp: true, newcap: true */
 /*global window, jQuery */
 
 
@@ -41,16 +41,39 @@
         // --PRIVATE VARIABLES
         //
 
+        // after James Padolsey [ http://james.padolsey.com/javascript/detect-ie-in-js-using-conditional-comments/ ]
+        // return IE version (up to 9) as an integer or undefined if not IE
+        ie = ( function(){
+
+            var undef,
+                v = 3,
+                div = document.createElement('div'),
+                all = div.getElementsByTagName('p');
+
+            do {
+                // if this is IE then the i element will be added as a child of div
+                // increment v each time through the loop
+                div.innerHTML = '<!--[if gt IE ' + (v += 1) + ']><p></p><![endif]-->';
+            }
+            // if this is IE then all[0] will be "truthy" if v is <= to the current version
+            while (all[0]);
+
+            //noinspection JSUnusedAssignment
+            return v > 4 ? v : undef;
+            
+        }() ),
+
         // see if we are serving to IE6
-        ie6 = ($.browser.msie && parseInt($.browser.version, 10) === 6),
+        //ie6 = ($.browser.msie && parseInt($.browser.version, 10) === 6),
+        ie6 = (ie === 6),
 
         // the serverComm plugin stylesheet
         styleText = [
             // stop "jittering" during scrolling in IE6 [ http://www.webmasterworld.com/css/3592524.htm ]
-            (ie6) ? "body { background: url(images/clear1.gif) fixed; }" : "",
+            ie6 ? "body { background: url(images/clear1.gif) fixed; }" : "",
             "#sc_contactServerPrompt" + "{ font-weight:bold; text-align:center; left:0px; width:100%;",
             // position:fixed -- include IE6 too
-            (ie6) ? "position: absolute; top: expression((document.documentElement || document.body).scrollTop);" : "position:fixed; top:0px;",
+            ie6 ? "position: absolute; top: expression((document.documentElement || document.body).scrollTop);" : "position:fixed; top:0px;",
             "}",
             "#sc_contactServerPrompt img { vertical-align:-2px; }",
             "#sc_contactServerPrompt span { cursor:default; }",
@@ -93,7 +116,7 @@
 
         // global flag indicating when an ajax request is in-process
         // maybe different than activeRequest when an ajax connection is
-        // complete but callbacks are still inprocess
+        // complete but callbacks are still in-process
         inprocess       = false,
 
 
@@ -112,6 +135,7 @@
 
             var options = $.serverComm.options;
 
+            //noinspection JSUnusedAssignment
             errorMessage = errorMessage || "";
 
             // invoke the giveupCallback function
@@ -189,6 +213,7 @@
                 inprocess = false;
 
                 // send the next request
+                //noinspection JSCheckFunctionSignatures
                 $.serverComm.contactServer();
             }
             // give up after the number of auto retries configured in options
@@ -293,7 +318,7 @@
             // data to be submitted to the server
             dataObject      : null,
 
-            // how many automatic retries should be made before the user is offered manual retrys
+            // how many automatic retries should be made before the user is offered manual retries
             autoRetrys      : 4,
 
             // timeout value for automatic attempts to contact the server
@@ -372,7 +397,6 @@
          *
          * Used in conjunction with activeConnection() to prevent users
          * from starting multiple XHR connections.
-         * 
          */
         inprocessWarning : function() {
 
@@ -493,7 +517,7 @@
                                 }
                                 // else there have been auto retries resulting in a success or the first connection was a success
                                 else {
-                                    // mulitple with success
+                                    // multiple with success
                                     if (requestAttempts > 1) {
 
                                         activeRequest = null;

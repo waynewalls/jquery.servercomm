@@ -360,6 +360,7 @@ session_start();
             // check to see if cookies are enabled
             ( function($) {
 
+                //noinspection JSUnusedAssignment
                 var enabled = false;
 
                 // try to set a cookie
@@ -387,8 +388,8 @@ session_start();
 
                     eventHandler_submit_button : function() {
 
-                        var returnDisplay = $("#return span"),
-                            dataDisplay   = $("#data span");
+                        var returnDisplay = $("#return").find("span"),
+                            dataDisplay   = $("#data").find("span");
 
                         $("button:contains(Submit)").bind("click", function() {
 
