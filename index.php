@@ -316,15 +316,15 @@ session_start();
 
         </div>
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
-            // load jQuery from Google's CDN
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js">
+            // load jQuery from jQuery's CDN
         </script>
 
         <script type="text/javascript" src="jquery/sc-combined.min.js">
             // load the jquery.hoverIntent and jquery.cookie plugin
         </script>
 
-        <script type="text/javascript" src="jquery.servercomm.js">
+        <script type="text/javascript" src="jquery.servercomm.min.js">
             // load the jquery.servercomm plugin
         </script>
 
