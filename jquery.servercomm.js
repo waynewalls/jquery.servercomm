@@ -1,10 +1,10 @@
 /**
  *  jQuery.servercomm plugin -- UI and API for $.ajax() requests
- *  Copyright (c) 2011 Wayne Walls - wfwalls(at)gmail(dot)com
- *  Date: 27 July 2011
+ *  Copyright (c) 2013 Wayne Walls - wfwalls(at)gmail(dot)com
+ *  Date: 26 May 2013
  *  @license MIT License or GNU General Public License (GPL) Version 2
  *  @author Wayne Walls
- *  @version 0.94
+ *  @version 0.95
  *
  */
 

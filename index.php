@@ -92,9 +92,15 @@ session_start();
 
             <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
 
-            Version: 0.94<br>
-            Date: 27 July 2011<br>
+            Version: 0.95<br>
+            Date: 26 May 2013<br>
             License: MIT License or GNU General Public License (GPL) Version 2<br><br>
+            
+            Tested with Internet Explorer 6 - 10, Firefox, Chrome, and Safari
+            
+        </p>
+        
+        <p>
 
             <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
             $.ajax().  It was developed for a training applications whose primary user group was in West Africa.
@@ -144,7 +150,7 @@ session_start();
         <div class="options" style="margin-top:0.75em;">
 
             <pre>$.serverComm</pre>
-            requires jQuery v1.4 (or later);  there are no other dependencies.
+            requires jQuery (tested with 1.4.2 and 1.10.0);  there are no other dependencies.
 
         </div>
 
