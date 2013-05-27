@@ -12,8 +12,7 @@ session_name("servercomm");
 session_start();
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-        "http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
 <html>
 
     <head>
@@ -21,18 +20,28 @@ session_start();
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
         <title>serverComm Plugin Demonstration &amp; Documentation</title>
+        
+        <!-- CSS : implied media="all" from html5boilerplate [ http://html5boilerplate.com/ ] -->
+        <link rel="stylesheet" href="css/style.css">
 
         <style type="text/css">
 
-            body { font-size:85%; font-family:arial, helvetica, sans-serif; line-height:1.35em; }
+            body { background-color: #f6f8f6; line-height:1.3em; }
+            
+            .pageTitle { font-size:150%; color:#654; font-weight:bold; margin:25px 0; text-align:center; }
 
-            pre { font-size:108%; margin-bottom:2px; }
+            .contentContainer {
+                visibility:visible; background-color:#fff; padding:20px; margin:0 auto 25px auto; width:750px; border:1px solid #987; position:relative; overflow:hidden;
+                border-radius:5px;
+            }   
+            
+            .contentContainer p { margin:2em 0 0 0; }
 
-            .bold { font-weight:bold; font-size:125%; color:#009; }
+            .bold { font-weight:bold; color:#000; }
 
             .pHeader { font-weight:bold; color:#009; }
 
-            .prompt { font-weight:bold; color:#009; margin:0 0 0.15em 0; }
+            .prompt { font-weight:bold; color:#009; margin:1em 0 0.15em 0; }
 
             .container { margin-left:1em; line-height:1.75em; }
 
@@ -52,8 +61,9 @@ session_start();
 
             .demo_warning { font-size:90%; font-weight:bold; color:white; background-color:#00a; padding:4px 5px 6px 5px; border:solid 2px #005; position:absolute }
 
-            .optionsPrompt { font-weight:bold; color:#009; margin:2em 0 0 0; }
-            .options { margin:2em 0 0 1em;}
+            .optionsPrompt { font-weight:bold; font-size:110%; color:#009; margin:2em 0 0 0; }
+            .options { margin:1em 0 0 25px;}
+            .options pre { padding:0; white-space:pre; }
 
             /* style the serverComm plugin UI prompt */
             #sc_contactServerPrompt { font-size:110%; }
@@ -76,240 +86,243 @@ session_start();
 
     <body>
 
-        <h3>jQuery serverComm Plugin Demonstration &amp; Documentation</h3>
-
-        <p>
-
-            <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>
-
-            Version: 0.95<br>
-            Date: 26 May 2013<br>
-            License: MIT License or GNU General Public License (GPL) Version 2<br><br>
-            
-            Tested with Internet Explorer 6 - 10, Firefox, Chrome, and Safari
-            
-        </p>
+        <h1 class="pageTitle">jQuery serverComm Plugin Demonstration &amp; Documentation</h1>
         
-        <p>
-
-            <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
-            $.ajax().  It was developed for a training applications whose primary user group was in West Africa.
-            This region of the world&mdash;at the time&mdash;was served by a single Internet backbone traveling
-            up the west side of the continent. Internet use involved long latency and frequent dropped connections.
-            Because of this, we wanted a UI that would keep the user informed about connection status and also retry
-            automatically in case of a dropped connection.
-
-        </p>
-
-        <p>
-
-            <span class="pHeader">Limitations. </span>At present, the serverComm plugin only supports the
-            $.ajax() text data type for receiving responses from the server.  To keep the UI simple, the plugin
-            currently handles only one AJAX request at a time.
-
-        </p>
-
-        <p>
-
-            <span class="pHeader">How to use this demonstration. </span>Select one of the connection test types
-            shown below and press the Submit button.  Rollover the ? to get a description of each test.  You can view
-            what is returned by the server-side script just below the Submit button. <span id="pageWarning">(Your
-            browser appears to have cookies disabled.  Session cookies required for the &quot;initial failure&quot;
-            test type*)</span>
-
-        </p>
-
-        <div class="prompt">Select a connection test type then press Submit:</div>
-
-        <div class="container">
-
-            <label><input type="radio" name="test_value" value="success"> successful connection</label><br>
-            <label><input type="radio" name="test_value" value="success_with_data"> success with returned data</label><br>
-            <label><input type="radio" name="test_value" value="failure_success"> initial failure (timeout) then success<span id="asterick">*</span></label><br>
-            <label><input type="radio" name="test_value" value="failure"> failed connection (timeout)</label><br>
-            <button>Submit</button>
-
-            <div id="return">Connection status: <span></span></div>
-
-            <div id="data">Returned data: <span></span></div>
-
-        </div>
-
-        <div class="optionsPrompt">serverComm dependencies:</div>
-
-        <div class="options" style="margin-top:0.75em;">
-
-            <pre>$.serverComm</pre>
-            requires jQuery (tested with 1.4.2 and 1.10.0);  there are no other dependencies.
-
-        </div>
-
-        <div class="optionsPrompt">serverComm usage:</div>
-
-        <div class="options" style="margin-top:0.75em;">
-
-            <pre>$.serverComm.contactServer( config )</pre> where config is an optional object containing serverComm options.<br><br>
-
-            Example:<br>
-            <pre><code>$.serverComm.contactServer( {
-    url:&quot;serverComm.php&quot;,
-    dataObject:{ key1:value1, key2,value2 },
-    successCallback:onSuccess
-} );</code></pre>
-
-        </div>
-
-        <div class="optionsPrompt">serverComm options (type) [ default value ]:</div>
-
-        <div class="options" style="margin-top:0.75em;">
-
-            <pre>// serverComm options default values are available in $.serverComm.optionDefaults</pre>
-
-        </div>
-
-        <div class="options" style="margin-top:0.75em;">
-
-            <pre>$.serverComm.options.<span class="bold">url</span> (string) [ empty string ]</pre>
-            The URL to assign to the $.ajax() URL property
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">method</span> (string) [ "POST" ]</pre>
-            The method to assign to the $.ajax() type property
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">dataObject</span> (object) [ null ]</pre>
-            An object to be assigned to the $.ajax() data property
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">autoRetrys</span> (integer) [ 4 ]</pre>
-            The number of times to automatically retry the request
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">autoTimeout</span> (integer) [ 7000 ]</pre>
-            The number of milliseconds to wait for a response from the server
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class=bold>giveupCallback</span> (function(error)) [ null ]</pre>
-            A function that will be called after the last automatic retry.  It is passed the error that was returned
-            by the server-side script or $.ajax()
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">errorCallback</span> (function(error, request)) [ null ]</pre>
-            A function that will be called before initiating each automatic retry.    It is passed the error that was returned
-            by the server-side script or $.ajax() and the number of request attempts.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">successCallback</span> (function(response)) [ null ]</pre>
-            A function that will be called after each successful connection attempt.    It is passed the text string that
-            $.ajax() passes to its success callback.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">contactPromptText</span> (string) [ "Contacting server" ]</pre>
-            A string shown in UI prompt during the first connection attempt.  The string can include HTML that can be
-            contained within inline element.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">giveupPromptText</span> (string) [ "The problem hasn't gone away &mdash; try again later" ]</pre>
-            A string shown in UI prompt after the last automatic retry has failed.  The string can include HTML that 
-            can be contained within inline element.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">successPromptText</span> (string) [ "Contacting server &mdash; SUCCESS!" ]</pre>
-            A string shown in UI prompt after a successful automatic retry.  The string can include HTML that 
-            can be contained within inline element.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">contactImagePath</span> (string) [ "images/busy999.gif" ]</pre>
-            The path to an image that will be displayed in the UI prompt during the initial connection attempt.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">problemImagePath</span> (string) [ "images/busy666.gif" ]</pre>
-            The path to an image that will be displayed in the UI prompt during automatic retries.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">closeBoxImagePath</span> (string) [ "images/close.gif" ]</pre>
-            The path to an image that will be used as a close box in the UI prompt that is shown after all automatic
-            retries have failed.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.options.<span class="bold">responseSeparator</span> (string) [ "|" ]</pre>
-            The character used by the server-side script to separate the connection status from data being returned
-            to the client.
-
-        </div>
-
-        <div class="optionsPrompt">serverComm public methods:</div>
-
-        <div class="options" style="margin-top:0.75em;">
-
-            <pre>$.serverComm.<span class="bold">configure</span>( config )</pre>
-            sets serverComm option defaults where config is an object containing new values that will act as defaults
-            for subsequent requests.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.<span class="bold">activeConnection</span>()</pre>
-            returns a boolean; true if there is an active serverComm request otherwise false.
-
-        </div>
-
-        <div class="options">
-
-            <pre>$.serverComm.<span class="bold">inprocessWarning</span>()</pre>
-            Displays an absolutely positioned prompt in the center of the user's window that says, "Please Wait!".
-            Used in conjunction with activeConnection() to prevent simultaneous serverComm requests.
-
-        </div>
-
-        <div class="options" style="margin-bottom:2em; ">
-
-            <pre>$.serverComm.<span class="bold">contactServer</span>( config )</pre>
-            Initiates a serverComm request where config is an optional object containing serverComm options as key/value pairs.
-
+        <div class="contentContainer">
+
+            <p>
+        
+                Version: 0.95<br>
+                Date: 26 May 2013<br>
+                License: MIT License or GNU General Public License (GPL) Version 2<br>
+                <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a><br><br>                
+                
+                Tested with Internet Explorer 6 - 10, Firefox, Chrome, and Safari
+                
+            </p>
+            
+            <p>
+    
+                <span class="pHeader">Background. </span>This plugin provides a user interface (UI) and simple API for
+                $.ajax().  It was developed for a training applications whose primary user group was in West Africa.
+                This region of the world&mdash;at the time&mdash;was served by a single Internet backbone traveling
+                up the west side of the continent. Internet use involved long latency and frequent dropped connections.
+                Because of this, we wanted a UI that would keep the user informed about connection status and also retry
+                automatically in case of a dropped connection.
+    
+            </p>
+    
+            <p>
+    
+                <span class="pHeader">Limitations. </span>At present, the serverComm plugin only supports the
+                $.ajax() text data type for receiving responses from the server.  To keep the UI simple, the plugin
+                currently handles only one AJAX request at a time.
+    
+            </p>
+    
+            <p>
+    
+                <span class="pHeader">How to use this demonstration. </span>Select one of the connection test types
+                shown below and press the Submit button.  Rollover the ? to get a description of each test.  You can view
+                what is returned by the server-side script just below the Submit button. <span id="pageWarning">(Your
+                browser appears to have cookies disabled.  Session cookies required for the &quot;initial failure&quot;
+                test type*)</span>
+    
+            </p>
+    
+            <div class="prompt">Select a connection test type then press Submit:</div>
+    
+            <div class="container">
+    
+                <label><input type="radio" name="test_value" value="success"> successful connection</label><br>
+                <label><input type="radio" name="test_value" value="success_with_data"> success with returned data</label><br>
+                <label><input type="radio" name="test_value" value="failure_success"> initial failure (timeout) then success<span id="asterick">*</span></label><br>
+                <label><input type="radio" name="test_value" value="failure"> failed connection (timeout)</label><br>
+                <button>Submit</button>
+    
+                <div id="return">Connection status: <span></span></div>
+    
+                <div id="data">Returned data: <span></span></div>
+    
+            </div>
+    
+            <div class="optionsPrompt">serverComm dependencies:</div>
+    
+            <div class="options" style="margin-top:0.75em;">
+    
+                <pre>$.serverComm</pre>
+                requires jQuery (tested with 1.4.2 and 1.10.0);  there are no other dependencies.
+    
+            </div>
+    
+            <div class="optionsPrompt">serverComm usage:</div>
+    
+            <div class="options" style="margin-top:0.75em;">
+    
+                <pre>$.serverComm.contactServer( config )</pre> where config is an optional object containing serverComm options.<br><br>
+    
+                Example:<br>
+                <pre><code>$.serverComm.contactServer( {
+        url:&quot;serverComm.php&quot;,
+        dataObject:{ key1:value1, key2,value2 },
+        successCallback:onSuccess
+    } );</code></pre>
+    
+            </div>
+    
+            <div class="optionsPrompt">serverComm options (type) [ default value ]:</div>
+    
+            <div class="options" style="margin-top:0.75em;">
+    
+                <pre>// serverComm options default values are available in $.serverComm.optionDefaults</pre>
+    
+            </div>
+    
+            <div class="options" style="margin-top:0.75em;">
+    
+                <pre>$.serverComm.options.<span class="bold">url</span> (string) [ empty string ]</pre>
+                The URL to assign to the $.ajax() URL property
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">method</span> (string) [ "POST" ]</pre>
+                The method to assign to the $.ajax() type property
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">dataObject</span> (object) [ null ]</pre>
+                An object to be assigned to the $.ajax() data property
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">autoRetrys</span> (integer) [ 4 ]</pre>
+                The number of times to automatically retry the request
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">autoTimeout</span> (integer) [ 7000 ]</pre>
+                The number of milliseconds to wait for a response from the server
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class=bold>giveupCallback</span> (function(error)) [ null ]</pre>
+                A function that will be called after the last automatic retry.  It is passed the error that was returned
+                by the server-side script or $.ajax()
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">errorCallback</span> (function(error, request)) [ null ]</pre>
+                A function that will be called before initiating each automatic retry.    It is passed the error that was returned
+                by the server-side script or $.ajax() and the number of request attempts.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">successCallback</span> (function(response)) [ null ]</pre>
+                A function that will be called after each successful connection attempt.    It is passed the text string that
+                $.ajax() passes to its success callback.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">contactPromptText</span> (string) [ "Contacting server" ]</pre>
+                A string shown in UI prompt during the first connection attempt.  The string can include HTML that can be
+                contained within inline element.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">giveupPromptText</span> (string) [ "The problem hasn't gone away &mdash; try again later" ]</pre>
+                A string shown in UI prompt after the last automatic retry has failed.  The string can include HTML that 
+                can be contained within inline element.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">successPromptText</span> (string) [ "Contacting server &mdash; SUCCESS!" ]</pre>
+                A string shown in UI prompt after a successful automatic retry.  The string can include HTML that 
+                can be contained within inline element.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">contactImagePath</span> (string) [ "images/busy999.gif" ]</pre>
+                The path to an image that will be displayed in the UI prompt during the initial connection attempt.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">problemImagePath</span> (string) [ "images/busy666.gif" ]</pre>
+                The path to an image that will be displayed in the UI prompt during automatic retries.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">closeBoxImagePath</span> (string) [ "images/close.gif" ]</pre>
+                The path to an image that will be used as a close box in the UI prompt that is shown after all automatic
+                retries have failed.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.options.<span class="bold">responseSeparator</span> (string) [ "|" ]</pre>
+                The character used by the server-side script to separate the connection status from data being returned
+                to the client.
+    
+            </div>
+    
+            <div class="optionsPrompt">serverComm public methods:</div>
+    
+            <div class="options" style="margin-top:0.75em;">
+    
+                <pre>$.serverComm.<span class="bold">configure</span>( config )</pre>
+                sets serverComm option defaults where config is an object containing new values that will act as defaults
+                for subsequent requests.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.<span class="bold">activeConnection</span>()</pre>
+                returns a boolean; true if there is an active serverComm request otherwise false.
+    
+            </div>
+    
+            <div class="options">
+    
+                <pre>$.serverComm.<span class="bold">inprocessWarning</span>()</pre>
+                Displays an absolutely positioned prompt in the center of the user's window that says, "Please Wait!".
+                Used in conjunction with activeConnection() to prevent simultaneous serverComm requests.
+    
+            </div>
+    
+            <div class="options" style="margin-bottom:2em; ">
+    
+                <pre>$.serverComm.<span class="bold">contactServer</span>( config )</pre>
+                Initiates a serverComm request where config is an optional object containing serverComm options as key/value pairs.
+    
+            </div>
+        
         </div>
 
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js">
